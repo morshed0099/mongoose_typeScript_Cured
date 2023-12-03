@@ -11,13 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentControler = void 0;
 const student_service_1 = require("./student.service");
-const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// import studentJoiValid from './dataVlidWithJoi'
+// import { z } from "zod";
+const getAllStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const student = req.body;
-        const result = yield student_service_1.StudentServices.createStudentIntoDD(student);
+        const result = yield student_service_1.StudentServices.getStudenIntoDb();
         res.status(200).json({
-            succes: true,
-            message: 'student created successfully',
+            success: true,
+            message: 'all student data fetched ',
             data: result,
         });
     }
@@ -25,6 +26,26 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         console.log(error);
     }
 });
+const getSigleStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.sutdentId;
+        const result = yield student_service_1.StudentServices.getSingleStudenByID(id);
+        res.status(200).json({
+            success: true,
+            message: 'studen fetch successfully',
+            data: result,
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'something went wrong !!',
+            data: error,
+        });
+        console.log(error);
+    }
+});
 exports.StudentControler = {
-    createStudent,
+    getAllStudent,
+    getSigleStudent,
 };

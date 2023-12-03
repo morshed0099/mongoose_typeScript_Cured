@@ -1,49 +1,28 @@
-import { Request, Response } from 'express'
+
 import { StudentServices } from './student.service'
-import { Student } from './students.interface'
+import { catchAsync } from '../../util/catchAsync'
 
-const createStudent = async (req: Request, res: Response) => {
-  try {
-    const student = req.body
-    const result: Student = await StudentServices.createStudentIntoDD(student)
-    res.status(200).json({
-      succes: true,
-      message: 'student created successfully',
-      data: result,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
 
-const getAllStudent = async (req: Request, res: Response) => {
-  try {
-    const result = await StudentServices.getStudenIntoDb()
-    res.status(200).json({
-      success: true,
-      message: 'all student data fetched ',
-      data: result,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-const getSigleStudent = async (req: Request, res: Response) => {
-  try {
-    const id = req.params.studentId
-    const result = await StudentServices.getSingleStudenByID(id)
-    res.status(200).json({
-      success: true,
-      message: 'studen fetch successfully',
-      data: result,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+const getAllStudent = catchAsync(async (req, res) => {
+  const result = await StudentServices.getStudenIntoDb()
+  res.status(200).json({
+    success: true,
+    message: 'all student data fetched ',
+    data: result,
+  })
+})
+
+const getSigleStudent = catchAsync(async (req, res) => {
+  const id = req.params.sutdentId
+  const result = await StudentServices.getSingleStudenByID(id)
+  res.status(200).json({
+    success: true,
+    message: 'studen fetch successfully',
+    data: result,
+  })
+})
 
 export const StudentControler = {
-  createStudent,
   getAllStudent,
   getSigleStudent,
 }

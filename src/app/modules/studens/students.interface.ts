@@ -1,36 +1,44 @@
+/* eslint-disable no-unused-vars */
+import { Model, Types } from 'mongoose'
+
 export type Gurdian = {
   fatherName: string
-  fatherOcupation: string
+  fatherOccupation: string
   fatherContactNo: string
   motherName: string
   motherContactNo: string
-  motherOcupation: string
+  motherOccupation: string
 }
-export type User = {
+export type TUser = {
   firstName: string
   middleName: string
   lastName: string
 }
 export type LocalGurdian = {
   name: string
-  ocupation: string
-  constactNo: string
+  occupation: string
+  contactNo: string
   address: string
 }
 export type Student = {
   id: string
-  genger: 'Male' | 'Female'
+  user: Types.ObjectId
+  gender: 'Male' | 'Female'
   dateOfBirth: string
-  name: User
+  name: TUser
   email: string
   avatar?: string
   contactNo: string
   emergencyContactNo: string
   bloodGroup: 'A+' | 'A-' | 'AB+' | 'AB-' | 'B+' | 'B-' | 'O+' | 'O-'
-  presenAddress: string
-  permanetArress: string
-  gurdian: Gurdian
-  localGurdian: LocalGurdian
+  presentAddress: string
+  permanentAddress: string
+  guardian: Gurdian
+  localGuardian: LocalGurdian
   profileImage: string
-  isActive: 'active' | 'block'
+
+}
+
+export interface StudernetMethod extends Model<Student> {
+  isStudentExsits(id: string): Promise<Student | null>
 }
