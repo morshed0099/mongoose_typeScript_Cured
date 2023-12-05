@@ -31,7 +31,7 @@ const createStudentIntoDD = async (payload: Student, password: string) => {
     user.role = 'student'
 
     const newUser = await User.create([user], { session })
-    console.log(newUser)
+    
 
     if (!newUser) {
       throw new AppError(httpStatus.BAD_REQUEST, 'user not created fail !!!')

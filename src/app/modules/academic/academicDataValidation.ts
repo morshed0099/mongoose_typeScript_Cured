@@ -26,6 +26,6 @@ const createAcademicSemisterValidation = z.object({
   }),
 })
 
-export const academicSemisterValidation={
-    createAcademicSemisterValidation
+export const academicSemisterValidation = {
+  createAcademicSemisterValidation,
 }

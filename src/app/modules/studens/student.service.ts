@@ -4,7 +4,7 @@ import AppError from '../../util/sendErrorwithCode'
 import { StudentModel } from './student.model'
 import mongoose from 'mongoose'
 import { User } from '../user/user.model'
-import { Student, Gurdian } from './students.interface'
+import { Student } from './students.interface'
 
 const getStudenIntoDb = async () => {
   const result = await StudentModel.find().populate('admissonSemister')
