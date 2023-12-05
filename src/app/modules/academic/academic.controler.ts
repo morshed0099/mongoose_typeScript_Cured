@@ -1,16 +1,55 @@
+import httpStatus from 'http-status'
 import { catchAsync } from '../../util/catchAsync'
-import { AcademicSmister } from './academic.module'
+import { academicSemisterService } from './academic.service'
+
 
 const createAcademicSemister = catchAsync(async (req, res) => {
-  const academicSemisterData = req.body
-  const academicSemister = await AcademicSmister.create(academicSemisterData)
-  res.status(200).json({
+  const result = await academicSemisterService.createAcademicSemister(req.body)
+  res.status(httpStatus.OK).json({
     success: true,
     message: 'academic semister created successfully !!',
-    data: academicSemister,
+    data: result,
   })
 })
 
+const getAllAcademicSemister = catchAsync(async (req, res) => {
+  const result = await academicSemisterService.getAllAcademicSemister()
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'academic semister all retive !!',
+    data: result,
+  })
+})
+
+const getSingleAcademicSemister = catchAsync(async (req, res) => {
+  const id = req.params.id
+  const result = await academicSemisterService.getSingleAcademicSemister(id)
+  if (!result) {
+    throw new Error('data not found !!!')
+  }
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'academic semister find successfully',
+    data: result,
+  })
+})
+
+const updateSingAcademicSemister = catchAsync(async (req, res) => {
+  const id = req.params.id
+  const data = req.body
+  const result = await academicSemisterService.updateSingleAcademicSemister(
+    id,
+    data,
+  )
+  res.status(httpStatus.OK).json({
+    success:true,
+    message:'academic semister updated succesfully !',
+    data:result
+  })
+})
 export const academicSemisterControle = {
   createAcademicSemister,
+  getAllAcademicSemister,
+  getSingleAcademicSemister,
+  updateSingAcademicSemister
 }

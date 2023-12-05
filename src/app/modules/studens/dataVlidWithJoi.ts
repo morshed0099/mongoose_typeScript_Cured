@@ -33,27 +33,31 @@ const guardianSchema = z.object({
 
 const studentSchemaValid = z.object({
   body: z.object({
-   student:z.object({
-    id: z.string({ required_error: 'id is requierd' }),
-    name: nameSchema,
-    gender: z.enum(['Male', 'Female', 'other'], {
-      required_error: 'gernder is required',
-    }),
-    bloodGroup: z.enum(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'], {
-      required_error: 'blood group is requried',
-    }),
-    email: z.string().email(),
-    guardian: guardianSchema,
-    localGuardian: localGuardianSchema,
-    presentAddress: z.string({ required_error: 'present address is required' }),
-    permanentAddress: z.string({
-      required_error: 'present address is required',
-    }),
-    emergencyContactNo: z.string({
-      required_error: 'emergency contact no is required',
+    student: z.object({
+      id: z.string({ required_error: 'id is requierd' }),
+      name: nameSchema,
+      gender: z.enum(['Male', 'Female', 'other'], {
+        required_error: 'gernder is required',
+      }),
+      bloodGroup: z.enum(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'], {
+        required_error: 'blood group is requried',
+      }),
+      email: z.string().email(),
+      guardian: guardianSchema,
+      localGuardian: localGuardianSchema,
+      presentAddress: z.string({
+        required_error: 'present address is required',
+      }),
+      permanentAddress: z.string({
+        required_error: 'present address is required',
+      }),
+      admissonSemister: z.string(),
+      emergencyContactNo: z.string({
+        required_error: 'emergency contact no is required',
+      }),
+      academicDepartment: z.string(),
     }),
   }),
-   })
 })
 
 export default studentSchemaValid

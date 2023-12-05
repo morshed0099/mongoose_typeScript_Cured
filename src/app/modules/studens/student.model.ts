@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Document, Query, Schema, model } from 'mongoose'
 import validator from 'validator'
 
 import {
@@ -97,6 +97,7 @@ const studentSchema = new Schema<Student, StudernetMethod>({
   email: {
     type: String,
     required: [true, 'Email is required'],
+    unique: true,
     validate: {
       validator: (value: string) => validator.isEmail(value),
       message: `{VALUE} is not email format!!`,
@@ -121,7 +122,15 @@ const studentSchema = new Schema<Student, StudernetMethod>({
     type: String,
     required: [true, 'Permanent address is required'],
   },
-
+  admissonSemister: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicSmister',
+    required: true,
+  },
+  academicDepartment: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicDepartment',
+  },
   profileImage: { type: String },
   guardian: {
     type: guardianSchema,
@@ -131,7 +140,21 @@ const studentSchema = new Schema<Student, StudernetMethod>({
     type: localGuardianSchema,
     required: [true, 'Local guardian information is required'],
   },
+  isDeleted: { type: Boolean, default: false },
 })
+
+// studentSchema.pre(
+//   /^find/,
+//   async function (this: Query<Student, Document>, next) {
+//     this.findOne({ isDeleted: { $eq: true } })
+//     next()
+//   },
+// )
+
+studentSchema.pre(/^find/, async function (this: Query<Student, Document>, next) {
+  this.find({ isDeleted: { $eq: false } });
+  next();
+});
 
 studentSchema.statics.isStudentExsits = async function (id: string) {
   const isExists = await StudentModel.findOne({ id })

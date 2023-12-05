@@ -1,10 +1,10 @@
 import { Schema, model } from 'mongoose'
+import { TAcademic } from './academic.interface'
 import {
-  TAcademic,
-
-} from './academic.interface'
-import { academicSemisterCode, academicSemisterName, month } from './academicSemisterConstat'
-
+  academicSemisterCode,
+  academicSemisterName,
+  month,
+} from './academicSemisterConstat'
 
 const academinSchema = new Schema<TAcademic>(
   {
@@ -29,13 +29,25 @@ const academinSchema = new Schema<TAcademic>(
       required: [true, 'endmonth is required'],
     },
     year: {
-      type: Date,
+      type: String,
+      required: true,
     },
   },
   {
     timestamps: true,
   },
 )
+
+academinSchema.pre('save', async function (next) {
+  const isExsits = await AcademicSmister.findOne({
+    name: this.name,
+    year: this.year,
+  })
+  if (isExsits) {
+    throw new Error('academic semister alredy exists !!')
+  }
+  next()
+})
 
 export const AcademicSmister = model<TAcademic>(
   'AcademicSmister',

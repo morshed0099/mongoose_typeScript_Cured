@@ -1,7 +1,6 @@
-
 import { StudentServices } from './student.service'
 import { catchAsync } from '../../util/catchAsync'
-
+import httpStatus from 'http-status'
 
 const getAllStudent = catchAsync(async (req, res) => {
   const result = await StudentServices.getStudenIntoDb()
@@ -21,8 +20,29 @@ const getSigleStudent = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const deleteStudent = catchAsync(async (req, res) => {
+  const studentId = req.params.studentId
+  const result = await StudentServices.deleteStudent(studentId)
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'student deleted successfully !!!',
+    data: result,
+  })
+})
 
+const updateStudent=catchAsync(async(req,res)=>{
+ const id= req.params.studentId
+ const studentData= req.body
+ const result= await StudentServices.updateStudent(id,studentData)
+ res.status(httpStatus.OK).json({
+  success:true,
+  message:"student updated successfully done !!",
+  data:result
+ })
+})
 export const StudentControler = {
   getAllStudent,
   getSigleStudent,
+  deleteStudent,
+  updateStudent
 }

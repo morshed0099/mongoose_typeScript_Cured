@@ -1,6 +1,7 @@
 import { userCrontorler } from './user.service'
 import { catchAsync } from '../../util/catchAsync'
 
+
 const createStudent = catchAsync(async (req, res) => {
   const { student, password } = req.body
   const result = await userCrontorler.createStudentIntoDD(student, password)
@@ -10,6 +11,7 @@ const createStudent = catchAsync(async (req, res) => {
     data: result,
   })
 })
+
 
 export const userControler = {
   createStudent,

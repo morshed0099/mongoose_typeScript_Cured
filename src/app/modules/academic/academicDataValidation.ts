@@ -10,9 +10,9 @@ const createAcademicSemisterValidation = z.object({
     name: z.enum([...academicSemisterName] as [string, ...string[]], {
       required_error: 'name is requied',
     }),
-    year: z.date({
+    year: z.string({
       required_error: 'year is requied',
-      invalid_type_error: 'year is date format',
+      invalid_type_error: 'year is string format',
     }),
     code: z.enum([...academicSemisterCode] as [string, ...string[]], {
       required_error: 'code is requied',

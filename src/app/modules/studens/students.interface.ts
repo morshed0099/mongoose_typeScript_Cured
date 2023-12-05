@@ -36,7 +36,10 @@ export type Student = {
   guardian: Gurdian
   localGuardian: LocalGurdian
   profileImage: string
-
+  admissonSemister: Types.ObjectId
+  academicDepartment: Types.ObjectId
+  isDeleted:boolean
+  
 }
 
 export interface StudernetMethod extends Model<Student> {
