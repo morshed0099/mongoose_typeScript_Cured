@@ -5,7 +5,7 @@ import AppError from '../../util/sendErrorwithCode'
 const academicDepartmentSchema = new Schema<TacademicDepartment>(
   {
     name: { type: String, required: true, unique: true },
-    faculty: { type: Schema.Types.ObjectId, ref: 'AcademicFaculty' },
+    academicFaculty: { type: Schema.Types.ObjectId, ref: 'AcademicFaculty' },
   },
   {
     timestamps: true,

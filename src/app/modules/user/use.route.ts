@@ -11,5 +11,6 @@ router.post(
   validate(studentSchemaValid),
   userControler.createStudent,
 )
+router.post('/create-faculty', userControler.createFaculty)
 
 export const userRouter = router

@@ -13,7 +13,7 @@ const userSchema = new mongoose_1.Schema({
     },
     needsPasswordChange: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false },
-    role: { type: String, enum: ['admin', 'student', 'faculty'] },
+    role: { type: String, enum: ['admin', 'student', 'academicFaculty'] },
     status: { type: String, enum: ['in-progress', 'blocked'] },
 }, {
     timestamps: true,

@@ -5,10 +5,102 @@ import { StudentModel } from './student.model'
 import mongoose from 'mongoose'
 import { User } from '../user/user.model'
 import { Student } from './students.interface'
+import { QueryBuilder } from '../../queryBuilder/queryBuilder'
 
-const getStudenIntoDb = async () => {
-  const result = await StudentModel.find().populate('admissonSemister')
+const getStudenIntoDb = async (query: Record<string, unknown>) => {
+  console.log(query)
+  // const queryObj = {
+  //   ...query,
+  // }
+
+  // let serchTerm = ''
+  // if (query?.serchTerm) {
+  //   serchTerm = query.serchTerm as string
+  // }
+  const serchAbleFelid = ['email', 'name.firstName', 'presentAddress']
+
+  // const serchQuery = StudentModel.find({
+  //   $or:serchAbleFelid.map((fl) => ({
+  //     [fl]: { $regex: serchTerm, $options: 'i' },
+  //   })),
+  // })
+
+  // const excludeFeild = ['serchTerm', 'sort', 'page', 'limit', 'feilds']
+
+  const studentQuery = new QueryBuilder(StudentModel.find(), query)
+    .serchQuery(serchAbleFelid)
+    .filterQuery()
+    .sort()
+    .paginate()
+    .feild()
+
+  const result = await studentQuery.queryMethod
   return result
+
+  // excludeFeild.forEach((el) => delete queryObj[el])
+
+  // const filterQuery = serchQuery.find(queryObj)
+
+  // let sort = '-createdAt'
+  // if (query.sort) {
+  //   sort = query.sort as string
+  // }
+
+  // const sorQuery = filterQuery.sort(sort)
+
+  // let limit = 1
+  // let page = 1
+  // let skip = 0
+
+  // if (query.limit) {
+  //   limit = Number(query.limit)
+  // }
+  // if (query.page) {
+  //   page = Number(query.page)
+  //   skip = (page - 1) * limit
+  // }
+  // const paginateQuery = sorQuery.skip(skip)
+  // const limitQuery = paginateQuery.limit(limit)
+
+  // let feilds = '-__V'
+  // if (query.feilds) {
+  //   feilds = (query.feilds as string).split(',').join(' ')
+  // }
+  // const filesFiltering = await limitQuery.select(feilds)
+
+  // const serchAbleFields = ['email', 'name.firstName', 'presentAddress']
+  // let serchTerm = ''
+  // if (query?.serchTerm) {
+  //   serchTerm = query?.serchTerm as string
+  // }
+
+  // const serchQuery = StudentModel.find({
+  //   $or: serchAbleFields.map((feild) => ({
+  //     [feild]: { $regex: serchTerm, $options: 'i' },
+  //   })),
+  // })
+
+  //   const excludeFeilds = ['serchTerm','sort']
+  //   excludeFeilds.forEach((el) => delete queryObj[el]);
+  //   console.log(queryObj)
+
+  //   const filterQuery =  serchQuery
+  //     .find(queryObj)
+  //     .populate('admissonSemister')
+  //     .populate({
+  //       path: 'academicDepartment',
+  //       populate: {
+  //         path: 'faculty',
+  //       },
+  //     })
+
+  // let sort='-createdAt'
+  // if(query?.sort){
+  //   sort= query?.sort as string
+  // }
+
+  // const sortQuery= await filterQuery.sort(sort)
+  //   return sortQuery
 }
 
 const getSingleStudenByID = async (id: string) => {

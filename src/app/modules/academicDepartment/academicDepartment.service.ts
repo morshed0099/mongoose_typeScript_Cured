@@ -2,17 +2,17 @@ import { TacademicDepartment } from './academicDepartment.interface'
 import { AcademicDepartment } from './academicDepartment.model'
 
 const createacademicDepartment = async (payload: TacademicDepartment) => {
-  const result = (await AcademicDepartment.create(payload)).populate('faculty')
+  const result = (await AcademicDepartment.create(payload)).populate('academicFaculty')
   return result
 }
 
 const getAllAcademicDepartment = async () => {
-  const result = await AcademicDepartment.find().populate('faculty')
+  const result = await AcademicDepartment.find().populate('academicFaculty')
   return result
 }
 
 const getSingeleAcademicDepartment = async (id: string) => {
-  const result = await AcademicDepartment.findById(id).populate('faculty')
+  const result = await AcademicDepartment.findById(id).populate('academicFaculty')
   return result
 }
 
@@ -22,7 +22,7 @@ const updateAcademicDepartment = async (
 ) => {
   const result = await AcademicDepartment.findByIdAndUpdate(id, payload, {
     new: true,
-  }).populate('faculty')
+  }).populate('academicFaculty')
   return result
 }
 

@@ -9,11 +9,9 @@ import { handelDuplicateError } from '../errors/handelDuplicateError'
 import AppError from '../util/sendErrorwithCode'
 
 const globalErrorHandeler: ErrorRequestHandler = (error, req, res, next) => {
-  console.log(error, 'line10')
+  
   let statusCode = 500
-
   let message = 'something went wrong !!'
-
   let errorSource: ErrorSource = [
     {
       path: '',
@@ -67,6 +65,7 @@ const globalErrorHandeler: ErrorRequestHandler = (error, req, res, next) => {
     errorSource,
     error,
     stack: config.NODE_ENV === 'development' ? error?.stack : '',
+    
   })
   next()
 }
